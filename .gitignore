@@ -1,0 +1,18 @@
+# Ignore ficheiros e pastas do Visual Studio
+.vs/
+*.user
+*.suo
+
+# Ignore ficheiros de build
+bin/
+obj/
+
+# Ignore ficheiros de configuração temporária
+*.dbmdl
+*.log
+*.vsidx
+
+# Ignore ficheiros de sistema
+*.DS_Store
+Thumbs.db
+AppData/
