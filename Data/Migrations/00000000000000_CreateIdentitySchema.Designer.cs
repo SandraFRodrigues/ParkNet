@@ -9,7 +9,7 @@ using ParkNet.Data;
 
 namespace ParkNet.Data.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(ParkNetDbContext))]
     [Migration("00000000000000_CreateIdentitySchema")]
     partial class CreateIdentitySchema
     {
