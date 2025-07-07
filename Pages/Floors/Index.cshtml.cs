@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ParkNet.Data;
-using ParkNet.Entities;
+using ParkNet.Entities.Infrastructure;
 
 namespace ParkNet.Pages.Floors
 {

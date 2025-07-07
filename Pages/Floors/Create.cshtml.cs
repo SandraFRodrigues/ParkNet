@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ParkNet.Data;
-using ParkNet.Entities;
+using ParkNet.Entities.Infrastructure;
 
 namespace ParkNet.Pages.Floors
 {

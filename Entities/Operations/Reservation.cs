@@ -1,6 +1,7 @@
-﻿using System;
+﻿using ParkNet.Entities.Infrastructure;
+using System;
 
-namespace ParkNet.Entities
+namespace ParkNet.Entities.Operations
 {
     public class Reservation
     {

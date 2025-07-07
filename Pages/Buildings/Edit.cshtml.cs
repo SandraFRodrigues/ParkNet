@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ParkNet.Data;
-using ParkNet.Entities;
+using ParkNet.Entities.Infrastructure;
 
 namespace ParkNet.Pages.Buildings
 {

@@ -15,7 +15,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Floors[0].Number)
+                @Html.DisplayNameFor(model => model.Floors[0].Name)
             </th>
             <th></th>
         </tr>
@@ -25,7 +25,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => floor.Number)
+                    @Html.DisplayFor(modelItem => floor.Name)
                 </td>
                 <td>
                     <a asp-page="./Edit" asp-route-id="@floor.Id">Edit</a> |
