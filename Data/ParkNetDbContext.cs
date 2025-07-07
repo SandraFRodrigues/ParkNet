@@ -2,11 +2,12 @@
 using Microsoft.EntityFrameworkCore;
 using ParkNet.Entities.Infrastructure;
 using ParkNet.Entities.Operations;
-using ParkNet.Entities;
+using ParkNet.Entities.Enums;
+using ParkNet.Entities.Identity;
 
 namespace ParkNet.Data
 {
-    public class ParkNetDbContext : IdentityDbContext<User>
+    public class ParkNetDbContext : IdentityDbContext<ApplicationUser>
     {
         public ParkNetDbContext(DbContextOptions<ParkNetDbContext> options)
             : base(options) { }
@@ -20,6 +21,7 @@ namespace ParkNet.Data
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<Subscription> Subscriptions { get; set; }
         public DbSet<PaymentTransaction> PaymentTransactions { get; set; }
+       
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -61,21 +63,21 @@ namespace ParkNet.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             // USER → RESERVATIONS
-            modelBuilder.Entity<User>()
+            modelBuilder.Entity<ApplicationUser>()
                 .HasMany(u => u.Reservations)
                 .WithOne(r => r.User)
                 .HasForeignKey(r => r.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             // USER → SUBSCRIPTIONS
-            modelBuilder.Entity<User>()
+            modelBuilder.Entity<ApplicationUser>()
                 .HasMany(u => u.Subscriptions)
                 .WithOne(s => s.User)
                 .HasForeignKey(s => s.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             // USER → PAYMENT TRANSACTIONS
-            modelBuilder.Entity<User>()
+            modelBuilder.Entity<ApplicationUser>()
                 .HasMany(u => u.PaymentTransactions)
                 .WithOne(t => t.User)
                 .HasForeignKey(t => t.UserId)

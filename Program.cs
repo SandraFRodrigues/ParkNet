@@ -1,22 +1,24 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ParkNet.Data;
-using ParkNet.Entities.Infrastructure;
+using ParkNet.Entities.Identity;
 using ParkNet.Interfaces;
 using ParkNet.Repositories;
+using ParkNet.Data.Seeding;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.General;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-//builder.Services.AddDbContext<ApplicationDbContext>(options =>
-//options.UseSqlServer(connectionString));
+//builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddDbContext<ParkNetDbContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+options.UseSqlServer(connectionString));
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ParkNetDbContext>();
 
 builder.Services.AddScoped<IParkingSlotRepository, ParkingSlotRepository>();
@@ -25,7 +27,7 @@ builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();

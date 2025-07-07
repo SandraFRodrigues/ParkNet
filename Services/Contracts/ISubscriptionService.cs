@@ -1,5 +1,5 @@
-﻿using ParkNet.Entities.Operations;
-using ParkNet.Entities.Operations.Enums;
+﻿using ParkNet.Entities.Enums;
+using ParkNet.Entities.Operations;
 
 
 namespace ParkNet.Services.Contracts

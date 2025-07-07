@@ -1,4 +1,5 @@
-﻿using ParkNet.Entities.Infrastructure;
+﻿using ParkNet.Entities.Identity;
+using ParkNet.Entities.Infrastructure;
 using System;
 
 namespace ParkNet.Entities.Operations
@@ -11,7 +12,7 @@ namespace ParkNet.Entities.Operations
         public DateTime EndTime { get; set; }
 
         public string UserId { get; set; } = string.Empty;
-        public User? User { get; set; }
+        public ApplicationUser? User { get; set; }
 
         public int ParkingSlotId { get; set; }
         public ParkingSlot? ParkingSlot { get; set; }

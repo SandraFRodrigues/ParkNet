@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ParkNet.Data;
 
@@ -11,9 +12,11 @@ using ParkNet.Data;
 namespace ParkNet.Migrations
 {
     [DbContext(typeof(ParkNetDbContext))]
-    partial class ParkNetDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250707221310_Refactor_ApplicationUser_And_Entities")]
+    partial class Refactor_ApplicationUser_And_Entities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -1,6 +1,6 @@
 ﻿using ParkNet.Entities.Infrastructure;
 
-namespace ParkNet.Entities
+namespace ParkNet.Entities.Enums
 {
     public class VehicleType
     {

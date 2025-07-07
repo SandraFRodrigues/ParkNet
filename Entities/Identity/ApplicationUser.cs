@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using ParkNet.Entities.Operations;
-using System.Collections.Generic;
 
-
-namespace ParkNet.Entities
+namespace ParkNet.Entities.Identity
 {
-    public class User : IdentityUser    
+    public class ApplicationUser : IdentityUser    
     {
         public decimal Balance { get; set; } = 0;
         public string PaymentCardToken { get; set; }= string.Empty;

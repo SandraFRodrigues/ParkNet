@@ -1,5 +1,6 @@
-﻿using ParkNet.Entities.Operations.Enums;
-using ParkNet.Entities.Infrastructure;
+﻿using ParkNet.Entities.Infrastructure;
+using ParkNet.Entities.Enums;
+using ParkNet.Entities.Identity;
 
 namespace ParkNet.Entities.Operations
 {
@@ -15,7 +16,7 @@ namespace ParkNet.Entities.Operations
 
         //relações
         public string UserId { get; set; } = string.Empty;
-        public User? User { get; set; }
+        public ApplicationUser? User { get; set; }
         public int ParkingSlotId { get; set; }
         public ParkingSlot? ParkingSlot { get; set; }
     }
