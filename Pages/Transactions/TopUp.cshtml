@@ -1,0 +1,21 @@
+﻿@page
+@model ParkNet.Pages.Transactions.TopUpModel
+@{
+	ViewData["Title"] = "Carregar Saldo";
+}
+
+<h2>Carregar Saldo</h2>
+
+<form method="post">
+	<div class="form-group">
+		<label for="Amount">Valor a carregar (€):</label>
+		<input asp-for="Amount" class="form-control" step="0.01" />
+		<span asp-validation-for="Amount" class="text-danger"></span>
+	</div>
+	<button type="submit" class="btn btn-primary mt-2">Carregar</button>
+</form>
+
+@if (TempData["SuccessMessage"] != null)
+{
+	<div class="alert alert-success mt-3">@TempData["SuccessMessage"]</div>
+}

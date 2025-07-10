@@ -1,0 +1,19 @@
+﻿@page
+@model ParkNet.Pages.Admin.Import.ViewImportModel
+@{
+	ViewData["Title"] = "Importar Parque";
+}
+
+<h2>Importar Parque</h2>
+
+<form method="post">
+    <label for="LayoutText">Layout dos Lugares (M e C):</label>
+    <textarea asp-for="LayoutText" rows="10" class="form-control"></textarea>
+    <br />
+
+    <label for="BuildingName">Nome do edifício:</label>
+    <input type="text" asp-for="BuildingName" placeholder="Nome do edifício" class="form-control" />
+    <br />
+
+    <button type="submit" class="btn btn-primary">Importar Parque</button>
+</form>
