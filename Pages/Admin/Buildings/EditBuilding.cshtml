@@ -1,0 +1,25 @@
+﻿@page "{id:int?}"
+@model ParkNet.Pages.Admin.EditBuildingModel
+
+<h2>@(Model.Building == null ? "Novo Edifício" : "Editar Edifício")</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="Building.Name" class="control-label"></label>
+        <input asp-for="Building.Name" class="form-control" />
+        <span asp-validation-for="Building.Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Salvar" class="btn btn-primary" />
+    </div>
+</form>
+
+@if (Model.Building == null)
+{
+    <div class="alert alert-info">.</div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

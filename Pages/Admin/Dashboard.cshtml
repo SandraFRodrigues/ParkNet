@@ -1,0 +1,57 @@
+﻿@page
+@model ParkNet.Pages.Admin.DashboardModel
+
+<h2>Dashboard Administrativo</h2>
+
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card text-bg-primary mb-3">
+            <div class="card-header">Utilizadores registados</div>
+            <div class="card-body"><h4>@Model.TotalUsers</h4></div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-bg-success mb-3">
+            <div class="card-header">Avenças Ativas</div>
+            <div class="card-body"><h4>@Model.ActiveSubscriptions</h4></div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-bg-warning mb-3">
+            <div class="card-header">Lugares Ocupados</div>
+            <div class="card-body"><h4>@Model.OccupiedSlots</h4></div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-bg-info mb-3">
+            <div class="card-header">Saldo Total dos Clientes</div>
+            <div class="card-body"><h4>€@Model.TotalClientBalance.ToString("F2")</h4></div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">Receita Total</div>
+    <div class="card-body">
+        <h4>€@Model.TotalRevenue.ToString("F2")</h4>
+        <hr />
+        <h5>Receita dos últimos meses</h5>
+        <table class="table table-striped w-auto">
+            <thead>
+                <tr>
+                    <th>Mês</th>
+                    <th>Receita</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var rev in Model.RevenuesByMonth)
+                {
+                    <tr>
+                        <td>@rev.Month</td>
+                        <td>€@rev.Revenue.ToString("F2")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

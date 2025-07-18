@@ -1,0 +1,51 @@
+﻿@page
+@model ParkNet.Pages.Buildings.PublicListModel
+
+<h2>Parques Disponíveis</h2>
+
+@if (Model.Buildings != null && Model.Buildings.Any())
+{
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Nome do Parque</th>
+                <th>Nº de Pisos</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var building in Model.Buildings)
+            {
+                <tr>
+                    <td>@building.Name</td>
+                    <td>@(building.Floors?.Count ?? 0)</td>
+                    <td>
+                        <a class="btn btn-primary" asp-page="/Admin/ViewSlots" asp-route-buildingId="@building.Id">Ver Lugares</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-info">Ainda não existem parques disponíveis.</div>
+}
+
+<style>
+    h2 {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .table {
+        margin-top: 10px;
+        width: 100%;
+        max-width: 800px;
+    }
+
+    .alert {
+        margin-top: 20px;
+        max-width: 500px;
+    }
+</style>

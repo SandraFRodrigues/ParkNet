@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ParkNet.Data;
 
@@ -11,9 +12,11 @@ using ParkNet.Data;
 namespace ParkNet.Migrations
 {
     [DbContext(typeof(ParkNetDbContext))]
-    partial class ParkNetDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250711224251_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -247,7 +250,7 @@ namespace ParkNet.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Buildings", (string)null);
+                    b.ToTable("Buildings");
                 });
 
             modelBuilder.Entity("ParkNet.Entities.Infrastructure.Floor", b =>
@@ -272,7 +275,7 @@ namespace ParkNet.Migrations
 
                     b.HasIndex("BuildingId");
 
-                    b.ToTable("Floors", (string)null);
+                    b.ToTable("Floors");
                 });
 
             modelBuilder.Entity("ParkNet.Entities.Infrastructure.ParkingSlot", b =>
@@ -311,7 +314,7 @@ namespace ParkNet.Migrations
 
                     b.HasIndex("VehicleTypeId");
 
-                    b.ToTable("ParkingSlots", (string)null);
+                    b.ToTable("ParkingSlots");
                 });
 
             modelBuilder.Entity("ParkNet.Entities.Operations.ParkingTransaction", b =>
@@ -347,7 +350,7 @@ namespace ParkNet.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ParkingTransactions", (string)null);
+                    b.ToTable("ParkingTransactions");
                 });
 
             modelBuilder.Entity("ParkNet.Entities.Operations.PaymentTransaction", b =>
@@ -381,7 +384,7 @@ namespace ParkNet.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PaymentTransactions", (string)null);
+                    b.ToTable("PaymentTransactions");
                 });
 
             modelBuilder.Entity("ParkNet.Entities.Operations.Reservation", b =>
@@ -414,7 +417,7 @@ namespace ParkNet.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Reservations", (string)null);
+                    b.ToTable("Reservations");
                 });
 
             modelBuilder.Entity("ParkNet.Entities.Operations.Subscription", b =>
@@ -451,7 +454,7 @@ namespace ParkNet.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Subscriptions", (string)null);
+                    b.ToTable("Subscriptions");
                 });
 
             modelBuilder.Entity("ParkNet.Entities.Types.VehicleType", b =>
@@ -472,7 +475,7 @@ namespace ParkNet.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("VehicleTypes", (string)null);
+                    b.ToTable("VehicleTypes");
 
                     b.HasData(
                         new

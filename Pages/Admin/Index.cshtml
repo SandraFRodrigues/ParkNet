@@ -1,0 +1,40 @@
+﻿@page
+@model ParkNet.Pages.Admin.IndexModel
+
+
+<h2>Lista de Edifícios</h2>
+
+@if (Model.Buildings != null && Model.Buildings.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Nº de Pisos</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var building in Model.Buildings)
+            {
+                <tr>
+                    <td>@building.Name</td>
+                    <td>@(building.Floors?.Count ?? 0)</td>
+                    <td>
+                        <a asp-page="/Admin/ViewBuilding" asp-route-id="@building.Id" class="btn btn-sm btn-primary">Ver</a>
+                        <a asp-page="/Admin/EditBuilding" asp-route-id="@building.Id" class="btn btn-sm btn-warning ms-1">Editar</a>
+                        <form method="post" asp-page-handler="Delete" asp-route-id="@building.Id" style="display:inline;" onsubmit="return confirm('Tem a certeza que deseja eliminar este edifício?');">
+                            <button type="submit" class="btn btn-sm btn-danger ms-1">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-info">Ainda não existem edifícios registados.</div>
+}
+
+<a asp-page="/Admin/EditBuilding" class="btn btn-success mt-3">Adicionar Novo Edifício</a>

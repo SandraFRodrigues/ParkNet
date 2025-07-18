@@ -1,0 +1,64 @@
+﻿@page "{id:int}"
+@model ParkNet.Pages.Admin.Buildings.ViewBuildingModel
+@using ParkNet.Entities.Enums
+@using ParkNet.Entities.Infrastructure
+
+<h2>@Model.Building?.Name</h2>
+
+@if (Model.Building?.Floors != null)
+{
+    foreach (var floor in Model.Building.Floors.OrderByDescending(f => f.Level))
+    {
+        <h4 class="mt-4">Piso @floor.Level</h4>
+        <div class="parking-grid">
+            @foreach (var slot in floor.ParkingSlots.OrderBy(s => s.Order))
+            {
+                <div class="slot
+                            @(slot.Status == SlotStatus.Livre ? "free" :
+                              slot.Status == SlotStatus.Ocupado ? "occupied" : "reserved")"
+                     title="Tipo: @(slot.VehicleType?.Designation ?? "N/D") | Estado: @slot.Status">
+                    @slot.Spot
+                </div>
+            }
+        </div>
+    }
+}
+else
+{
+    <p>Edifício não encontrado ou sem pisos.</p>
+}
+
+<style>
+    .parking-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .slot {
+        width: 60px;
+        height: 60px;
+        border-radius: 8px;
+        font-weight: bold;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 4px rgba(0,0,0,0.2);
+        font-size: 1.1em;
+    }
+
+    .free {
+        background-color: #28a745; 
+    }
+
+    .occupied {
+        background-color: #dc3545; 
+    }
+
+    .reserved {
+        background-color: #ffc107;
+        color: black;
+    }
+</style>

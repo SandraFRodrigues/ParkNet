@@ -5,6 +5,8 @@ VisualStudioVersion = 17.13.35913.81
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkNet", "ParkNet.csproj", "{121714C1-A748-4F6D-84AD-D4A719E96F57}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkNet.Tests", "..\ParkNet.Tests\ParkNet.Tests.csproj", "{CCA42D92-1F19-460C-B3F3-7E39F0BAA0EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{121714C1-A748-4F6D-84AD-D4A719E96F57}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{121714C1-A748-4F6D-84AD-D4A719E96F57}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{121714C1-A748-4F6D-84AD-D4A719E96F57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCA42D92-1F19-460C-B3F3-7E39F0BAA0EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCA42D92-1F19-460C-B3F3-7E39F0BAA0EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCA42D92-1F19-460C-B3F3-7E39F0BAA0EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCA42D92-1F19-460C-B3F3-7E39F0BAA0EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

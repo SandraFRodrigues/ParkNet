@@ -9,5 +9,6 @@ namespace ParkNet.Entities.Infrastructure
         
         public ICollection<Floor> Floors { get; set; } = new List<Floor>();
         public ICollection<ParkingSlot> ParkingSlots { get; set; } = new List<ParkingSlot>();
+
     }
 }

@@ -1,0 +1,59 @@
+﻿@page
+@model ParkNet.Pages.Client.Parking.DashboardModel
+@{
+    ViewData["Title"] = "Painel de Estacionamento";
+}
+
+<h2>Painel de Estacionamento</h2>
+
+@if (Model.UserBalance != null)
+{
+    <div class="mb-3">
+        <strong>Saldo atual:</strong> <span class="badge bg-success">€@Model.UserBalance.Value.ToString("F2")</span>
+    </div>
+}
+
+@if (!Model.HasActiveParking)
+{
+    <form method="post">
+        <div class="form-group mb-2">
+            <label>Edifício</label>
+            <select asp-for="Input.BuildingId" class="form-control" asp-items="Model.BuildingOptions" onchange="this.form.submit()">
+                <option value="">-- Escolha o edifício --</option>
+            </select>
+        </div>
+        <div class="form-group mb-2">
+            <label>Piso</label>
+            <select asp-for="Input.FloorId" class="form-control" asp-items="Model.FloorOptions" onchange="this.form.submit()">
+                <option value="">-- Escolha o piso --</option>
+            </select>
+        </div>
+        <div class="form-group mb-2">
+            <label>Lugar</label>
+            <select asp-for="Input.ParkingSlotId" class="form-control" asp-items="Model.SlotOptions">
+                <option value="">-- Escolha o lugar --</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-success mt-2">Entrar no parque</button>
+    </form>
+}
+else
+{
+    <div class="alert alert-info">
+        Está estacionado no lugar <b>@Model.ActiveEntry?.Spot</b>
+        <b>(@Model.ActiveEntry?.VehicleType)</b>
+        (Edifício <b>@Model.ActiveEntry?.BuildingName</b>, Piso <b>@Model.ActiveEntry?.FloorName</b>) desde <b>@Model.ActiveEntry?.EntryTime.ToString("dd/MM/yyyy HH:mm")</b>.
+    </div>
+    <form method="post" asp-page-handler="Exit" asp-route-transactionId="@Model.ActiveEntry.TransactionId">
+        <button type="submit" class="btn btn-danger">Sair do Parque</button>
+    </form>
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success mt-3">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger mt-3">@TempData["ErrorMessage"]</div>
+}

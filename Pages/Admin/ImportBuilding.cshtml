@@ -1,21 +1,19 @@
 ﻿@page
 @model ParkNet.Pages.Admin.ImportBuildingModel
-@using Microsoft.AspNetCore.Authorization
-@attribute [Authorize(Roles = "Admin")]
+
 
 <h2>Importar Layout do Parque</h2>
 
 <form method="post" class="mb-4">
     <div class="mb-3">
-        <label for="BuildingName" class="form-label">Nome do Edifício:</label>
-        <input type="text" class="form-control" id="BuildingName" name="BuildingName" value="@Model.BuildingName" required />
+        <label asp-for="BuildingName" class="form-label"></label>
+        <input asp-for="BuildingName" class="form-control" required />
         <span asp-validation-for="BuildingName" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
-        <label for="LayoutInput" class="form-label">Layout do Parque (cola o texto aqui):</label>
-        <textarea class="form-control" id="LayoutInput" name="Layout" rows="10" required
-                  oninput="previewLayout()">@Model.Layout</textarea>
+        <label asp-for="Layout" class="form-label"></label>
+        <textarea asp-for="Layout" class="form-control" rows="10" required oninput="previewLayout()"></textarea>
         <span asp-validation-for="Layout" class="text-danger"></span>
     </div>
 
@@ -44,12 +42,12 @@
     <partial name="_ValidationScriptsPartial" />
     <script>
         function previewLayout() {
-            const layoutText = document.getElementById("LayoutInput").value.trim();
+            const layoutText = document.getElementById("Layout").value.trim();
             const previewSection = document.getElementById("preview");
             const layoutPreview = document.getElementById("layoutPreviewContainer");
             layoutPreview.innerHTML = "";
 
-            if (layoutText === "") {
+            if (!layoutText) {
                 previewSection.classList.add("d-none");
                 return;
             }
@@ -60,26 +58,26 @@
                 const floorDiv = document.createElement("div");
 
                 const label = document.createElement("div");
-                label.className = "floor-label";
+                label.className = "floor-label fw-bold my-2";
                 label.innerText = `Piso ${floorIndex}`;
                 floorDiv.appendChild(label);
 
                 const lines = floorText.split("\n");
                 lines.forEach((line, rowIndex) => {
                     const rowDiv = document.createElement("div");
-                    rowDiv.className = "slot-row";
+                    rowDiv.className = "slot-row d-flex";
 
                     [...line].forEach((char, colIndex) => {
                         const slot = document.createElement("div");
-                        slot.classList.add("slot");
+                        slot.classList.add("slot", "border", "text-center", "me-1", "mb-1", "p-1");
 
                         let tooltip = `Piso ${floorIndex} | Linha ${rowIndex + 1} | Coluna ${colIndex + 1} - `;
 
-                        if (char === "C" || char === "c") {
+                        if (char.toUpperCase() === "C") {
                             slot.classList.add("car");
                             slot.innerText = "C";
                             slot.title = tooltip + "Carro";
-                        } else if (char === "M" || char === "m") {
+                        } else if (char.toUpperCase() === "M") {
                             slot.classList.add("moto");
                             slot.innerText = "M";
                             slot.title = tooltip + "Moto";
@@ -102,7 +100,7 @@
         }
 
         function clearLayout() {
-            document.getElementById("LayoutInput").value = "";
+            document.getElementById("Layout").value = "";
             document.getElementById("preview").classList.add("d-none");
         }
 

@@ -1,9 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 public class GenericRepository<T> : IGenericRepository<T> where T : class
 {
@@ -13,43 +9,34 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
     public GenericRepository(DbContext context)
     {
         _context = context;
-        _dbSet = _context.Set<T>();
+        _dbSet = context.Set<T>();
     }
 
-    public async Task<T> GetByIdAsync(int id)
-    {
-        return await _dbSet.FindAsync(id);
-    }
+    public async Task<T?> GetByIdAsync(int id) => await _dbSet.FindAsync(id);
 
-    public async Task<IEnumerable<T>> GetAllAsync()
-    {
-        return await _dbSet.ToListAsync();
-    }
+    public async Task<IEnumerable<T>> GetAllAsync() => await _dbSet.ToListAsync();
 
     public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
-    {
-        return await _dbSet.Where(predicate).ToListAsync();
-    }
+        => await _dbSet.Where(predicate).ToListAsync();
 
-    public async Task AddAsync(T entity)
+    public async Task<T> AddAsync(T entity)
     {
-        await _dbSet.AddAsync(entity);
+        _dbSet.Add(entity);
         await _context.SaveChangesAsync();
+        return entity;
     }
 
-    public async Task UpdateAsync(T entity)
+    public async Task<bool> UpdateAsync(T entity)
     {
         _dbSet.Update(entity);
-        await _context.SaveChangesAsync();
+        return await _context.SaveChangesAsync() > 0;
     }
 
-    public async Task DeleteAsync(int id)
+    public async Task<bool> DeleteAsync(int id)
     {
         var entity = await _dbSet.FindAsync(id);
-        if (entity != null)
-        {
-            _dbSet.Remove(entity);
-            await _context.SaveChangesAsync();
-        }
+        if (entity == null) return false;
+        _dbSet.Remove(entity);
+        return await _context.SaveChangesAsync() > 0;
     }
 }

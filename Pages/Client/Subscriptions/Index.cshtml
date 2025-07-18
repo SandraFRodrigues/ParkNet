@@ -1,0 +1,107 @@
+﻿@page
+@model ParkNet.Pages.Client.Subscriptions.IndexModel
+@using System.Globalization;
+
+@{
+    ViewData["Title"] = "Comprar Avença";
+}
+
+<h2>Comprar Nova Avença</h2>
+
+<form method="post" autocomplete="off">
+    <div class="form-group mb-2">
+        <label asp-for="Input.SubscriptionType">Tipo de Avença</label>
+        <select asp-for="Input.SubscriptionType" class="form-control">
+            @foreach (var option in Model.SubscriptionTypeOptions)
+            {
+                <option value="@option.Value">@option.Text</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group mb-2">
+        <label asp-for="Input.BuildingId">Edifício</label>
+        <select asp-for="Input.BuildingId"
+                class="form-control"
+                asp-items="Model.BuildingOptions"
+                onchange="this.form.submit()">
+            <option value="">-- Selecione --</option>
+        </select>
+    </div>
+
+    <div class="form-group mb-2">
+        <label asp-for="Input.FloorId">Piso</label>
+        <select asp-for="Input.FloorId"
+                class="form-control"
+                asp-items="Model.FloorOptions"
+                onchange="this.form.submit()"
+                disabled="@(Model.Input.BuildingId == 0 ? "disabled" : "")">
+            <option value="">-- Selecione --</option>
+        </select>
+    </div>
+
+    <div class="form-group mb-2">
+        <label asp-for="Input.ParkingSlotId">Lugar de Estacionamento</label>
+        <select asp-for="Input.ParkingSlotId"
+                class="form-control"
+                asp-items="Model.ParkingSlotOptions"
+                disabled="@(Model.Input.FloorId == 0 ? "disabled" : "")">
+            <option value="">-- Selecione --</option>
+        </select>
+    </div>
+
+    <div class="form-group mb-2">
+        <label asp-for="Input.StartDate">Data de Início</label>
+        <input asp-for="Input.StartDate" class="form-control" type="date" />
+    </div>
+
+    <div class="form-group mb-2">
+        <label>Preço:</label>
+        <span class="badge bg-info">€@Model.CalculatedPrice.ToString("C2", CultureInfo.GetCultureInfo("pt-PT"))</span>
+    </div>
+
+    <button type="submit" class="btn btn-success">Comprar</button>
+</form>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success mt-2">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger mt-2">@TempData["ErrorMessage"]</div>
+}
+
+<hr />
+
+<h4>Minhas avenças ativas</h4>
+@if (Model.ActiveSubscriptions.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Tipo</th>
+                <th>Edifício</th>
+                <th>Piso</th>
+                <th>Lugar</th>
+                <th>Validade</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var sub in Model.ActiveSubscriptions)
+            {
+                <tr>
+                    <td>@sub.Type</td>
+                    <td>@sub.ParkingSlot?.Floor?.Building?.Name</td>
+                    <td>@sub.ParkingSlot?.Floor?.Name</td>
+                    <td>@sub.ParkingSlot?.Spot</td>
+                    <td>@sub.EndDate.ToShortDateString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-info">Não tem avenças ativas.</div>
+}

@@ -25,7 +25,7 @@ public class TransactionService : ITransactionService
         var slot = await _context.ParkingSlots.FindAsync(slotId);
         if (slot != null)
         {
-            slot.Status = SlotStatus.Occupied;
+            slot.Status = SlotStatus.Ocupado;
         }
 
         await _context.ParkingTransactions.AddAsync(transaction);
@@ -52,17 +52,15 @@ public class TransactionService : ITransactionService
 
         transaction.AmountCharged = amount;
         transaction.Paid = true;
-
-        // Atualiza saldo do utilizador
+       
         if (transaction.User != null)
         {
             transaction.User.Balance -= amount;
         }
 
-        // Liberta o slot
         if (transaction.ParkingSlot != null)
         {
-            transaction.ParkingSlot.Status = SlotStatus.Free;
+            transaction.ParkingSlot.Status = SlotStatus.Livre;
         }
 
         await _context.SaveChangesAsync();

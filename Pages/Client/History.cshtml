@@ -1,0 +1,36 @@
+﻿@page
+@model ParkNet.Pages.Client.HistoryModel
+@{
+    ViewData["Title"] = "Histórico";
+}
+
+<h2>Histórico de Movimentos</h2>
+
+@if (Model.Movimentos.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Tipo</th>
+                <th>Descrição</th>
+                <th>Valor (€)</th>
+                <th>Data/Hora</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var mov in Model.Movimentos)
+            {
+                <tr>
+                    <td>@mov.Tipo</td>
+                    <td>@mov.Descricao</td>
+                    <td>@mov.Valor.ToString("F2")</td>
+                    <td>@mov.DataHora.ToString("dd/MM/yyyy HH:mm")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-info">Ainda não existem movimentos.</div>
+}

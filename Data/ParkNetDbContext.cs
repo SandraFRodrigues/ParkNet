@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using ParkNet.Entities.Enums;
+using ParkNet.Entities.Types;
 using ParkNet.Entities.Identity;
 using ParkNet.Entities.Infrastructure;
 using ParkNet.Entities.Operations;
@@ -16,7 +16,6 @@ namespace ParkNet.Data
         public DbSet<Floor> Floors { get; set; }
         public DbSet<ParkingSlot> ParkingSlots { get; set; }
         public DbSet<VehicleType> VehicleTypes { get; set; }
-
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<Subscription> Subscriptions { get; set; }
         public DbSet<PaymentTransaction> PaymentTransactions { get; set; }
@@ -25,31 +24,32 @@ namespace ParkNet.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-           
+
+
             modelBuilder.Entity<Building>()
                 .HasMany(b => b.Floors)
                 .WithOne(f => f.Building)
                 .HasForeignKey(f => f.BuildingId)
                 .OnDelete(DeleteBehavior.Cascade);
-        
+
             modelBuilder.Entity<Floor>()
                 .HasMany(f => f.ParkingSlots)
                 .WithOne(ps => ps.Floor)
                 .HasForeignKey(ps => ps.FloorId)
                 .OnDelete(DeleteBehavior.Cascade);
-        
+
             modelBuilder.Entity<ParkingSlot>()
                 .HasOne(ps => ps.VehicleType)
                 .WithMany(vt => vt.ParkingSlots)
                 .HasForeignKey(ps => ps.VehicleTypeId)
                 .OnDelete(DeleteBehavior.Restrict);
-          
+
             modelBuilder.Entity<ParkingSlot>()
                 .HasMany(ps => ps.Reservations)
                 .WithOne(r => r.ParkingSlot)
                 .HasForeignKey(r => r.ParkingSlotId)
                 .OnDelete(DeleteBehavior.Restrict);
-        
+
             modelBuilder.Entity<ParkingSlot>()
                 .HasMany(ps => ps.Subscriptions)
                 .WithOne(s => s.ParkingSlot)
@@ -62,13 +62,11 @@ namespace ParkNet.Data
                 .HasForeignKey(r => r.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-
             modelBuilder.Entity<ApplicationUser>()
                 .HasMany(u => u.Subscriptions)
                 .WithOne(s => s.User)
                 .HasForeignKey(s => s.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
-
 
             modelBuilder.Entity<ApplicationUser>()
                 .HasMany(u => u.PaymentTransactions)
@@ -84,6 +82,30 @@ namespace ParkNet.Data
             modelBuilder.Entity<ParkingSlot>()
                 .Property(p => p.Status)
                 .HasConversion<string>();
+
+
+            modelBuilder.Entity<VehicleType>().HasData(
+                new VehicleType { Id = 1, Designation = "Car", Code = "C" },
+                new VehicleType { Id = 2, Designation = "Moto", Code = "M" }
+            );
+
+
+            modelBuilder.Entity<Subscription>()
+                .Property(s => s.Price)
+                .HasColumnType("decimal(18,2)");
+
+            modelBuilder.Entity<ApplicationUser>()
+                .Property(u => u.Balance)
+                .HasColumnType("decimal(18,2)");
+
+            modelBuilder.Entity<PaymentTransaction>()
+                .Property(p => p.Amount)
+                .HasColumnType("decimal(18,2)");
+
+            modelBuilder.Entity<ParkingTransaction>()
+                .Property(p => p.AmountCharged)
+                .HasColumnType("decimal(18,2)");
+
 
             modelBuilder.Entity<PaymentTransaction>()
                 .Property(p => p.Timestamp)

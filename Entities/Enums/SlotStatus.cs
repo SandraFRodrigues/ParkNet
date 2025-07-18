@@ -2,8 +2,8 @@
 {
     public enum SlotStatus
     {
-        Free,
-        Occupied,
-        Reserved
+        Livre,
+        Ocupado,
+        Reservado
     }
 }

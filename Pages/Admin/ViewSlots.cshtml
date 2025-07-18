@@ -1,0 +1,24 @@
+﻿@page "{buildingId:int}"
+@model ParkNet.Pages.Admin.ViewSlotsModel
+
+<h2>Lugares de Estacionamento - @Model.BuildingName</h2>
+
+@if (Model.Floors != null && Model.Floors.Any())
+{
+    foreach (var floor in Model.Floors.OrderByDescending(f => f.Level))
+    {
+        <h4 class="mt-4 mb-2">Piso @floor.Name</h4>
+        <div class="d-flex flex-wrap mb-4">
+            @foreach (var slot in floor.ParkingSlots.OrderBy(s => s.Spot))
+            {
+                <button class="btn m-1 @(slot.IsOccupied ? "btn-danger" : "btn-success")" disabled>
+                    @slot.Spot
+                </button>
+            }
+        </div>
+    }
+}
+else
+{
+    <p>Sem dados de lugares disponíveis para este edifício.</p>
+}

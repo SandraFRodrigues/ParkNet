@@ -12,9 +12,7 @@ namespace ParkNet.Entities.Operations
         public DateTime EndDate { get; set; }
 
         public decimal Price { get; set; }
-        public bool IsActive=> DateTime.UtcNow >= StartDate && DateTime.UtcNow <= EndDate;
-
-        //relações
+        public bool IsActive=> DateTime.UtcNow >= StartDate && DateTime.UtcNow <= EndDate;       
         public string UserId { get; set; } = string.Empty;
         public ApplicationUser? User { get; set; }
         public int ParkingSlotId { get; set; }

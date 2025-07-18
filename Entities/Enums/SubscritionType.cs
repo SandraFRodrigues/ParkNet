@@ -2,9 +2,9 @@
 {
     public enum SubscriptionType
     {
-        Monthly,
-        Quarterly,
-        SemiAnnual,
-        Annual
+        Mensal,
+        Trimestral,
+        Semestral,
+        Anual
     }
 }

@@ -4,7 +4,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - ParkNet</title>
-    <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ParkNet.styles.css" asp-append-version="true" />
@@ -19,16 +18,37 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/Buildings/Index">Buildings</a>
-                        </li>
+                    <ul class="navbar-nav flex-grow-1">                       
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-dark" href="#" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Conta
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="accountDropdown">
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                        <li><a class="dropdown-item" asp-page="/Admin/Dashboard">Dashboard</a></li>
+                                        <li><a class="dropdown-item" asp-page="/Admin/ImportBuilding">Importar Edifício</a></li>
+                                        <li><a class="dropdown-item" asp-page="/Admin/Buildings/PublicList">Edifícios</a></li>
+                                    }
+                                    @if (User.IsInRole("Client"))
+                                    {
+                                        <li><a class="dropdown-item" asp-page="/Client/History">Histórico</a></li>
+                                        <li><a class="dropdown-item" asp-page="/Client/Transactions/TopUp">Saldo</a></li>
+										<li><a class="dropdown-item" asp-page="/Client/Subscriptions/Index">Avenças</a></li>
+                                        <li><a class="dropdown-item" asp-page="/Client/Parking/Dashboard">Reservas</a></li>
+                                    }
+                                    <li><hr class="dropdown-divider" /></li>
+                                    <li>
+                                        <form method="post" asp-area="Identity" asp-page="/Account/Logout" id="logoutForm" class="m-0">
+                                            <button type="submit" class="dropdown-item">Logout</button>
+                                        </form>
+                                    </li>
+                                </ul>
+
+                            </li>
+                        }
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
@@ -40,17 +60,14 @@
             @RenderBody()
         </main>
     </div>
-
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2025 - ParkNet - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            &copy; 2025 - ParkNet - Sandra Rodrigues
         </div>
     </footer>
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

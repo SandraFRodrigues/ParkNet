@@ -11,20 +11,26 @@ namespace ParkNet.Pages.Admin
     [Authorize(Roles = "Admin")]
     public class ImportBuildingModel : PageModel
     {
-        private readonly IImportService _importService;
+        private readonly IBuildingImportService _importBuildingService;
+
         private readonly ParkNetDbContext _context;
 
-        public ImportBuildingModel(IImportService importService, ParkNetDbContext context)
+        public ImportBuildingModel(IBuildingImportService importBuildingService, ParkNetDbContext context)
+
         {
-            _importService = importService;
+
+            _importBuildingService = importBuildingService;
+
             _context = context;
+
         }
 
-        [BindProperty]
-        public string Layout { get; set; }
 
         [BindProperty]
-        public string BuildingName { get; set; }
+        public string Layout { get; set; } = string.Empty;
+
+        [BindProperty]
+        public string BuildingName { get; set; } = string.Empty;
 
         public bool? Success { get; set; }
 
@@ -38,12 +44,12 @@ namespace ParkNet.Pages.Admin
         {
             if (string.IsNullOrWhiteSpace(BuildingName))
             {
-                ModelState.AddModelError("BuildingName", "O nome do edifício é obrigatório.");
+                ModelState.AddModelError(nameof(BuildingName), "O nome do edifício é obrigatório.");
             }
 
             if (string.IsNullOrWhiteSpace(Layout))
             {
-                ModelState.AddModelError("Layout", "O layout é obrigatório.");
+                ModelState.AddModelError(nameof(Layout), "O layout é obrigatório.");
             }
 
             if (!ModelState.IsValid)
@@ -52,7 +58,7 @@ namespace ParkNet.Pages.Admin
                 return Page();
             }
 
-            Success = await _importService.CreateBuildingFromLayoutAsync(BuildingName, Layout);
+            Success = await _importBuildingService.ImportFromTextAsync(Layout, BuildingName);
 
             if (Success == true)
             {
@@ -62,7 +68,7 @@ namespace ParkNet.Pages.Admin
 
                 if (lastBuilding != null)
                 {
-                    return RedirectToPage("/Admin/ViewBuilding", new { id = lastBuilding.Id });
+                    return RedirectToPage("/Admin/Buildings/ViewBuilding", new { id = lastBuilding.Id });
                 }
             }
 

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ParkNet.Data;
 using ParkNet.Entities.Infrastructure;
-using ParkNet.Interfaces;
+using ParkNet.Repositories.Contracts;
 
 namespace ParkNet.Repositories
 {
@@ -12,6 +12,7 @@ namespace ParkNet.Repositories
         { 
             _dbContext = context;
         }
+
 
         public async Task<IEnumerable<ParkingSlot>> GetAvailableSlotsAsync()
         {

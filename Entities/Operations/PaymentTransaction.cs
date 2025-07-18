@@ -10,8 +10,6 @@ namespace ParkNet.Entities.Operations
         public decimal Amount { get; set; }
         public DateTime Timestamp { get; set; } = DateTime.UtcNow;
         public string Description { get; set; } = string.Empty;
-
-        // Relações
         public string UserId { get; set; } = string.Empty;
         public ApplicationUser? User { get; set; }
     }
